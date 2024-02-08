@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Massage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,9 +28,12 @@ class HomeController extends Controller
     public function index()
     {
         $car = Car::latest()->get();
+        $cars = Car::all();
+        $massage = Massage::all();
+        $users = User::all();
 
         if (Auth::check() && Auth::user()->is_admin == 1) {
-            return view('backend.dashboard');
+            return view('backend.dashboard', compact('cars', 'massage', 'users'));
         } else {
             return view('frontend.pages.home', compact('car'));
         }
